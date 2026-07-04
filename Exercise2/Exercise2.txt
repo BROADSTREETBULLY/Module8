@@ -1,0 +1,119 @@
+>_MONGOSH
+use Module8
+switched to db Module8
+db["Excercise2"].find()
+db.createCollection("users")
+db.createCollection("posts")
+db.createCollection("comments")
+db.createCollection("likes")
+{ ok: 1 }
+show collections
+comments
+Excercise2
+likes
+posts
+users
+
+db.users.insertOne({})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a48764e2f49c554ac028533')
+}
+db.users.insertOne({
+  username: "j_doe",
+  firstName: "John",
+  lastName: "Doe",
+  dateOfBirth: ISODate("1995-04-12"),
+  email: "j.doe@example.com"
+})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a48765f2f49c554ac028534')
+}
+db.users.insertOne({
+  username: "a_smith",
+  firstName: "Amy",
+  lastName: "Smith",
+  dateOfBirth: ISODate("1998-09-23"),
+  email: "a.smith@example.com"
+})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a4876862f49c554ac028535')
+}
+db.users.find()
+{
+  _id: ObjectId('6a48764e2f49c554ac028533')
+}
+{
+  _id: ObjectId('6a48765f2f49c554ac028534'),
+  username: 'j_doe',
+  firstName: 'John',
+  lastName: 'Doe',
+  dateOfBirth: 1995-04-12T00:00:00.000Z,
+  email: 'j.doe@example.com'
+}
+{
+  _id: ObjectId('6a4876862f49c554ac028535'),
+  username: 'a_smith',
+  firstName: 'Amy',
+  lastName: 'Smith',
+  dateOfBirth: 1998-09-23T00:00:00.000Z,
+  email: 'a.smith@example.com'
+}
+db.posts.insertOne({ userId: ObjectId("6a48765f2f49c554ac028534"), title: "My First Blog Post", description: "Just setting up my blogging space!", image: "post1.jpg" })
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a4876cc2f49c554ac028536')
+}
+db.posts.find()
+{
+  _id: ObjectId('6a4876cc2f49c554ac028536'),
+  userId: ObjectId('6a48765f2f49c554ac028534'),
+  title: 'My First Blog Post',
+  description: 'Just setting up my blogging space!',
+  image: 'post1.jpg'
+}
+db.comments.insertOne({ postId: ObjectId("6a4876cc2f49c554ac028536"), userId: ObjectId("6a4876862f49c554ac028535"), comment: "Great first post, welcome to blogging!" })
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a48770e2f49c554ac028537')
+}
+db.likes.find()
+db.comments.find()
+{
+  _id: ObjectId('6a48770e2f49c554ac028537'),
+  postId: ObjectId('6a4876cc2f49c554ac028536'),
+  userId: ObjectId('6a4876862f49c554ac028535'),
+  comment: 'Great first post, welcome to blogging!'
+}
+db.likes.insertOne({ postId: ObjectId("6a4876cc2f49c554ac028536"), userId: ObjectId("6a4876862f49c554ac028535") })
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a48776a2f49c554ac028538')
+}
+db.likes.find
+[Function: find] AsyncFunction {
+  returnsPromise: true,
+  apiVersions: [ 1, Infinity ],
+  returnType: 'Cursor',
+  serverVersions: [ '0.0.0', '999.999.999' ],
+  topologies: [ 'ReplSet', 'Standalone', 'Sharded', 'LoadBalanced' ],
+  deprecated: false,
+  platforms: [ 'Compass', 'Browser', 'CLI' ],
+  isDirectShellCommand: false,
+  acceptsRawInput: false,
+  shellCommandCompleter: undefined,
+  newShellCommandCompleter: undefined,
+  help: [Function (anonymous)] Help
+}
+show collections
+comments
+Excercise2
+likes
+posts
+users
+
+Module8
+
+

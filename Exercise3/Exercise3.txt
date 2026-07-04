@@ -1,0 +1,73 @@
+CREATE DATABASE exercise3;
+USE exercise3;
+
+CREATE TABLE users (
+  UserID INTEGER AUTO_INCREMENT PRIMARY KEY,
+  UserName VARCHAR(30) NOT NULL,
+  FirstName VARCHAR(20),
+  LastName VARCHAR(20),
+  DateOfBirth DATE
+);
+
+CREATE TABLE posts (
+  PostID INTEGER AUTO_INCREMENT PRIMARY KEY,
+  UserID INTEGER NOT NULL,
+  Title VARCHAR(50),
+  Description TEXT,
+  Image VARCHAR(255),
+  CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (UserID) REFERENCES users(UserID)
+);
+
+CREATE TABLE comments (
+  CommentID INTEGER AUTO_INCREMENT PRIMARY KEY,
+  UserID INTEGER NOT NULL,
+  PostID INTEGER NOT NULL,
+  Comment TEXT,
+  CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (UserID) REFERENCES users(UserID),
+  FOREIGN KEY (PostID) REFERENCES posts(PostID)
+);
+
+CREATE TABLE likes (
+  LikeID INTEGER AUTO_INCREMENT PRIMARY KEY,
+  UserID INTEGER NOT NULL,
+  PostID INTEGER NOT NULL,
+  FOREIGN KEY (UserID) REFERENCES users(UserID),
+  FOREIGN KEY (PostID) REFERENCES posts(PostID),
+  UNIQUE (UserID, PostID)
+);
+
+SHOW TABLES;
+
+INSERT INTO users (UserName, FirstName, LastName, DateOfBirth)
+VALUES ('j_doe', 'John', 'Doe', '1995-04-12');
+
+INSERT INTO users (UserName, FirstName, LastName, DateOfBirth)
+VALUES ('a_smith', 'Amy', 'Smith', '1998-09-23');
+
+SELECT * FROM users;
+
+INSERT INTO posts (UserID, Title, Description, Image)
+VALUES (1, 'My First Blog Post', 'Just setting up my blogging space!', 'post1.jpg');
+
+SELECT * FROM posts;
+
+INSERT INTO comments (UserID, PostID, Comment)
+VALUES (2, 1, 'Great first post, welcome to blogging!');
+
+SELECT * FROM comments;
+
+INSERT INTO likes (UserID, PostID)
+VALUES (2, 1);
+
+SELECT * FROM likes;
+
+SELECT p.Title, u.UserName AS Author,
+       COUNT(DISTINCT c.CommentID) AS CommentCount,
+       COUNT(DISTINCT l.LikeID) AS LikeCount
+FROM posts p
+JOIN users u ON p.UserID = u.UserID
+LEFT JOIN comments c ON c.PostID = p.PostID
+LEFT JOIN likes l ON l.PostID = p.PostID
+GROUP BY p.PostID;
